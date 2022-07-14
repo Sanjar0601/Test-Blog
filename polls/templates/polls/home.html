@@ -1,0 +1,35 @@
+{% extends "polls/base.html" %}
+{% block content %}
+    {% for post in posts%}
+        <article class="media content-section">
+            <img class = "rounded-circle article-img" src="{{ post.author.profile.image.url}}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#" style="text-decoration:none">{{ post.author }}</a>
+              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+            </div>
+            <h2><a class="article-title" href="{% url 'post-detail' post.id %}" style="text-decoration: none;">{{ post.title }}</a></h2>
+              <p class="article-content"><h3>{{ post.content }}
+
+          </h3> </strong></p>
+
+          </div>
+
+            {% if post.comments.all %}
+            {% for comment in post.comments.all %}
+            <hr>
+
+            <p><strong>Posted by {{comment.author}}</strong></p>
+            <h5><p>{{ comment.body }}</p></h5>
+            {%endfor %}
+
+            <p><a href="{% url 'post-comment' post.pk %}" style="text-decoration: none;">Add Comment</a></p>
+
+            {% else %}
+            <a href="{% url 'post-comment' post.pk %}" style="text-decoration: none;">Add Comment</a>
+
+          {% endif %}
+
+            </article>
+{% endfor %}
+{% endblock content %}
