@@ -25,12 +25,13 @@ def home(request):
 class PostListView(ListView):
     model = Post
     template_name = 'polls/home.html'
-    context_object_name = 'posts'
+
     ordering = ['-date_posted']
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
-        context['comments'] = Comment.objects.all()
+        context['posts'] = Post.objects.all().prefetch_related('author', 'comments')
+        context['comments'] = Comment.objects.all().prefetch_related('author', 'post')
         return context
 
 

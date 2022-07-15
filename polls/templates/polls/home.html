@@ -19,8 +19,8 @@
             {% for comment in post.comments.all %}
             <hr>
 
-            <p><strong>Posted by {{comment.author}}</strong></p>
-            <h5><p>{{ comment.body }}</p></h5>
+
+            {{comment.author}}: {{ comment.body }}
             {%endfor %}
 
             <p><a href="{% url 'post-comment' post.pk %}" style="text-decoration: none;">Add Comment</a></p>

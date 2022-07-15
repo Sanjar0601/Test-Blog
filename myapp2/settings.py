@@ -41,10 +41,13 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
+    'debug_toolbar'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -80,7 +83,7 @@ WSGI_APPLICATION = 'myapp2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
@@ -135,3 +138,8 @@ LOGIN_URL = 'login'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
