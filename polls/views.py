@@ -15,11 +15,6 @@ from .models import Post, Comment
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 
-def home(request):
-    context = {
-        'posts': Post.objects.all()
-    }
-    return render(request, 'polls/home.html', context)
 
 
 class PostListView(ListView):
@@ -28,10 +23,10 @@ class PostListView(ListView):
 
     ordering = ['-date_posted']
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self):
         context = super().get_context_data()
-        context['posts'] = Post.objects.all().prefetch_related('author', 'comments')
-        context['comments'] = Comment.objects.all().prefetch_related('author', 'post')
+        context['posts'] = Post.objects.all().prefetch_related('author')
+        context['comments'] = Comment.objects.all().select_related('author', 'post')
         return context
 
 
